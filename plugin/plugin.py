@@ -117,7 +117,8 @@ To access this box's tuners you can connect via lan or UPnP.
 		n = "%03d_" % (count)
 		name = n + self.cleanName(bouquet[1])
 		path = "/media/hdd/tuner/" + name
-		system("mkdir " + path)
+		cmd = "mkdir \'" + path + "\'"
+		system(cmd)
 		serviceHandler = eServiceCenter.getInstance()
 		services = serviceHandler.list(eServiceReference(bouquet[0]))
 		channels = services and services.getContent("SN", True)
