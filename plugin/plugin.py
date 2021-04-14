@@ -1,12 +1,12 @@
 ##############################################################################
-#                          <<< Bh Tuner Server >>>                           
-#                                                                            
-#                      2012 meo <lupomeo@hotmail.com>          
-#                                                                            
-#  This file is open source software; you can redistribute it and/or modify  
-#     it under the terms of the GNU General Public License version 2 as      
-#               published by the Free Software Foundation.                   
-#                                                                            
+#                          <<< Bh Tuner Server >>>
+#
+#                      2012 meo <lupomeo@hotmail.com>
+#
+#  This file is open source software; you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License version 2 as
+#               published by the Free Software Foundation.
+#
 ##############################################################################
 
 # This plugin implement the Tuner Server feature included in Black Hole image
@@ -39,10 +39,10 @@ class BhpTunerServer(Screen):
 		<widget name="key_green" position="330,450" zPosition="1" size="140,40" font="Regular;18" halign="center" valign="center" backgroundColor="transpBlack" transparent="1"/>
 		<widget name="key_yellow" position="565,450" zPosition="1" size="140,40" font="Regular;18" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
 	</screen>"""
-	
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		
+
 		mytext = """
 This plugin implement the Tuner Server feature included in Black Hole images. It will allow you to share the tuners of this box with another Stb box, a PC and/or another compatible device in your home network.
 The server will build a virtual channels list in the folder /media/hdd/tuner on this box.
@@ -61,7 +61,7 @@ NOTE: The sever is built, based on your current ip and the current channel list 
 		self["key_yellow"] = Label("Close")
 		self.my_serv_active = False
 		self.ip = "0.0.0.0"
-				
+
 		self["actions"] = ActionMap(["WizardActions", "ColorActions"],
 		{
 			"ok": self.close,
@@ -78,7 +78,7 @@ NOTE: The sever is built, based on your current ip and the current channel list 
 	def ServStart(self):
 		self["lab1"].setText("Server building in progress\nPlease wait ...")
 		self.activityTimer.start(10)
-		
+
 	def doServStart(self):
 		self.activityTimer.stop()
 		ret = system("rm -rf /media/hdd/tuner")
@@ -88,7 +88,7 @@ NOTE: The sever is built, based on your current ip and the current channel list 
 			ipm = "%d.%d.%d.%d" % (ip[0], ip[1], ip[2], ip[3])
 			if ipm != "0.0.0.0":
 				self.ip = ipm
-			
+
 		ret = system("mkdir /media/hdd/tuner")
 		chdir("/media/hdd/tuner")
 		s_type = '1:7:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 22) || (type == 25) || (type == 134) || (type == 195)'
@@ -99,7 +99,7 @@ NOTE: The sever is built, based on your current ip and the current channel list 
 		for bouquet in bouquets:
 			self.poPulate(bouquet, count)
 			count += 1
-			
+
 		chdir("/home/root")
 		mytext = """
 Server avaliable on ip %s
@@ -111,7 +111,7 @@ To access this box's tuners you can connect via lan or UPnP.
 		self["lab1"].setText(mytext)
 		self.session.open(MessageBox, "Build Complete.", MessageBox.TYPE_INFO)
 		self.updateServ()
-			
+
 	def poPulate(self, bouquet, count):
 		n = "%03d_" % (count)
 		name = n + self.cleanName(bouquet[1])
@@ -126,7 +126,7 @@ To access this box's tuners you can connect via lan or UPnP.
 			if not int(channel[0].split(":")[1]) & 64:
 				n2 = "%03d_" % (count2)
 				filename = path + "/" + n2 + self.cleanName(channel[1]) + ".m3u"
-				try: 
+				try:
 					out = open(filename, "w")
 				except:
 					continue
@@ -135,7 +135,7 @@ To access this box's tuners you can connect via lan or UPnP.
 				out.write("http://" + self.ip + ":8001/" + channel[0] + "\n\n")
 				out.close()
 				count2 += 1
-	
+
 	def cleanName(self, name):
 		name = name.replace(" ", "_")
 		name = name.replace('\xc2\x86', '').replace('\xc2\x87', '')
@@ -144,20 +144,20 @@ To access this box's tuners you can connect via lan or UPnP.
 		name = name.replace("<", "")
 		name = name.replace("/", "")
 		return name
-			
+
 	def ServStop(self):
-		if self.my_serv_active == True:	
+		if self.my_serv_active == True:
 			ret = system("rm -rf /media/hdd/tuner")
 			mybox = self.session.open(MessageBox, "Tuner Server disabled.", MessageBox.TYPE_INFO)
 			mybox.setTitle("Info")
 			rc = system("sleep 1")
 			self.updateServ()
-		
+
 	def updateServ(self):
 		self["labrun"].hide()
 		self["labstop"].hide()
 		self.my_serv_active = False
-		
+
 		if isdir("/media/hdd/tuner"):
 			self.my_serv_active = True
 			self["labstop"].hide()
@@ -165,13 +165,13 @@ To access this box's tuners you can connect via lan or UPnP.
 		else:
 			self["labstop"].show()
 			self["labrun"].hide()
-			
+
 	def delTimer(self):
 		del self.activityTimer
 
 
 def main(session, **kwargs):
-	session.open(BhpTunerServer)	
+	session.open(BhpTunerServer)
 
 
 def Plugins(**kwargs):
