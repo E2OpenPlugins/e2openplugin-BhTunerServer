@@ -94,7 +94,7 @@ NOTE: The sever is built, based on your current ip and the current channel list 
 		chdir("/media/hdd/tuner")
 		s_type = '1:7:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 22) || (type == 25) || (type == 134) || (type == 195)'
 		serviceHandler = eServiceCenter.getInstance()
-		services = serviceHandler.list(eServiceReference('%s FROM BOUQUET "bouquets.tv" ORDER BY bouquet'%(s_type)))
+		services = serviceHandler.list(eServiceReference('%s FROM BOUQUET "bouquets.tv" ORDER BY bouquet' % (s_type)))
 		bouquets = services and services.getContent("SN", True)
 		count = 1
 		for bouquet in bouquets:
@@ -133,7 +133,7 @@ To access this box's tuners you can connect via lan or UPnP.
 					continue
 				out.write("#EXTM3U\n")
 				out.write("#EXTINF:-1," + channel[1] + "\n")
-				out.write("http://" + self.ip + ":8001/" + channel[0]+ "\n\n")
+				out.write("http://" + self.ip + ":8001/" + channel[0] + "\n\n")
 				out.close()
 				count2 += 1
 	
