@@ -24,6 +24,7 @@ from os import system, rename as os_rename, remove as os_remove, chdir
 from os.path import isdir
 from enigma import eServiceCenter, eServiceReference, eTimer
 
+
 class BhpTunerServer(Screen):
 	skin = """
 	<screen position="center,center" size="800,505" title="BH Tuner Server Panel">
@@ -74,8 +75,6 @@ NOTE: The sever is built, based on your current ip and the current channel list 
 		self.onClose.append(self.delTimer)
 		self.onLayoutFinish.append(self.updateServ)
 
-		
-		
 	def ServStart(self):
 		self["lab1"].setText("Server building in progress\nPlease wait ...")
 		self.activityTimer.start(10)
@@ -137,9 +136,6 @@ To access this box's tuners you can connect via lan or UPnP.
 				out.close()
 				count2 += 1
 	
-		
-		
-
 	def cleanName(self, name):
 		name = name.replace(" ", "_")
 		name = name.replace('\xc2\x86', '').replace('\xc2\x87', '')
@@ -149,7 +145,6 @@ To access this box's tuners you can connect via lan or UPnP.
 		name = name.replace("/", "")
 		return name
 			
-		
 	def ServStop(self):
 		if self.my_serv_active == True:	
 			ret = system("rm -rf /media/hdd/tuner")
@@ -158,7 +153,6 @@ To access this box's tuners you can connect via lan or UPnP.
 			rc = system("sleep 1")
 			self.updateServ()
 		
-
 	def updateServ(self):
 		self["labrun"].hide()
 		self["labstop"].hide()
@@ -174,7 +168,6 @@ To access this box's tuners you can connect via lan or UPnP.
 			
 	def delTimer(self):
 		del self.activityTimer
-
 
 
 def main(session, **kwargs):
