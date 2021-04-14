@@ -182,4 +182,4 @@ def main(session, **kwargs):
 
 
 def Plugins(**kwargs):
-	return PluginDescriptor(name="Bh_Tuner-Server", description="Allow stream from current box tuners", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
+	return PluginDescriptor(name="Bh_Tuner-Server", description="Allow stream from current box tuners", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
